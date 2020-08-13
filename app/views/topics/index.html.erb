@@ -1,0 +1,9 @@
+<div class="d-flex flex-row justify-content-between">
+    <h1 class="p-2">Forum</h1>
+    <div class="d-flex align-items-center">
+        <a role="button" href="<%= new_topic_path%>" class="btn btn-outline-primary">New Topic</a>
+    </div>
+</div>
+<% @topics.each do |topic| %>
+    <h3><a href="<%= topic_path(topic.id)%>"> <%= topic.title %></a></h3>
+<% end %>

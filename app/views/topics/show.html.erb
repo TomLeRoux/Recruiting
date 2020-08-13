@@ -1,0 +1,45 @@
+<div class="d-flex flex-row justify-content-between">
+    <h1><%= @topic.title %></h1>
+    <div class="d-flex flex-row align-items-center">
+        <a role="button" href="<%= edit_topic_path%>" class="btn btn-outline-primary mr-2">Edit Topic</a>
+        <a role="button" href="<%= topic_path%>" class="btn btn-danger" data-confirm="Are you sure ?" data-method="DELETE">Delete Topic</a>
+    </div>
+</div>
+
+<div class="container">
+    <p><%= @topic.description %></p>
+</div>
+<br/>
+<% @messages.each do |message| %>
+    <div class="d-flex flex-row justify-content-between pt-4">
+        <% if message.userId.nil? %>
+            <span>@<%= message.owner%></span>
+        <% else %>
+            <a href="<%= user_path(message.userId)%>" >@<%= message.owner%></a>
+        <% end %>
+        <div>
+            <span class=" mr-2"><%= message.updated_at%></span>
+            <a role="button" href="<%= message_path(message.id) %>" class="btn btn-danger align-self-start" data-method="DELETE">
+                Delete
+            </a>
+        </div>
+    </div>
+    <div class="row border rounded p-2">
+        <p class="w-100 m-2 p-2 tata" style="overflow-inline: hidden;text-overflow: ellipsis;"><%= message.content%></p>
+    </div>
+<% end %>
+
+<div class="container border m-2 p-t-3">
+    <%= form_for @newMessage do |n| %>
+        <%= n.hidden_field :userId, :value => session[:user_id]%>
+        <%= n.hidden_field :topicId, :value => @topic.id%>
+        <%= n.hidden_field :owner, :value => @user ? @user.name : "Anonymous"%>
+        <div class="form-group">
+            <label>New message</label>
+            <%= n.text_area :content, class: "form-control"%>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+    <% end %>
+</div>

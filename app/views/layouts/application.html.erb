@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Recruting</title>
+        <%= csrf_meta_tags %>
+        <%= csp_meta_tag %>
+
+        <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <a class="navbar-brand" href="<%= root_path %>">Recruting</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse px-5 mx-5" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%= welcome_url %>">Welcome</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%= topics_url %>">Forum</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav px-5">
+                    <% if session[:user_id] %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= logout_url %>" data-method="POST">Logout</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= user_path(session[:user_id]) %>">User</a>
+                        </li>
+                    <% else %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= login_url %>">Login</a>
+                        </li>
+                    <% end %>
+                </ul>
+            </div>
+        </nav>
+        <div class="container" style="padding-top: 5rem;">
+            <%= yield %>
+        </div>
+    </body>
+</html>

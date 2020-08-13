@@ -1,0 +1,22 @@
+<div class="container w-50">
+    <%= form_for @user, :url => check_path do |u|%>
+        <div class="form-group">
+            <label>Email</label>
+            <%= u.text_field :email, class: "form-control", type: "email"%>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <%= u.text_field :password, class: "form-control", type: "password"%>
+        </div>
+        <% if !session[:error].nil? %>
+            <div class="alert alert-danger">
+                <span><%= session[:error]%></span>
+            </div>
+            <% session.delete(:error) %>
+        <% end %>
+        <div class="form-group">
+            <button type="submit"class="btn btn-primary">Login</button>
+            <a role="button" href="<%= register_path %>" class="btn btn-primary">Register</a>
+        </div>
+    <% end %>
+</div>
