@@ -46,7 +46,10 @@ class UsersController < ApplicationController
     end
 
     def show
-        @user = User.find(params[:id])
+        @user = User.find_or_initialize_by(id: params[:id])
+        if (@user.email.nil?)
+            redirect_to root_path
+        end
         @picture = Picture.find_or_initialize_by(userId: params[:id])
         @cv = Cv.find_or_initialize_by(userId: params[:id])
     end

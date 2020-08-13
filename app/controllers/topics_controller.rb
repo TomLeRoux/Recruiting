@@ -4,10 +4,13 @@ class TopicsController < ApplicationController
     end
 
     def show
-        @topic = Topic.find(params[:id])
+        @topic = Topic.find_or_initialize_by(id: params[:id])
+        if (@topic.title.nil?)
+            redirect_to root_path
+        end
         @messages = Message.where(topicId: params[:id]).sort_by(&:created_at)
         @newMessage = Message.new
-        @user = User.find(session[:user_id])
+        @user = User.find_or_initialize_by(id: session[:user_id])
     end
 
     def new
@@ -21,7 +24,10 @@ class TopicsController < ApplicationController
     end
 
     def edit
-        @topic = Topic.find(params[:id])
+        @topic = Topic.find_or_initialize_by(id: params[:id])
+        if (@topic.title.nil?)
+            redirect_to root_path
+        end
     end
 
     def update
